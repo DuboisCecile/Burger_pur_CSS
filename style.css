@@ -38,13 +38,10 @@ main {
 
 #navigation .menu-text {
   list-style: none; /* suppression des puces des listes (on est dans un ul) */
-  display: block; /* le float plus bas ne s'appliquera que sur un block. Pas indispensable car c'est un ul, donc par défaut déjà en block */
   margin: 0;
   padding: 0;
-  overflow: hidden; /* pour masquer le menu lorsqu'on est sur mobile */
-  clear: both; /* pour pouvoir appliquer le float sans décaler le logo */
-  float: left;
   max-height: 0; /* pour que le menu soit masqué par défaut */
+  overflow: hidden; /* pour masquer le menu lorsqu'on est sur mobile */
   transition: max-height 0.2s ease-out; /* effet d'apparition/disparition du menu vertical sur mobile */
 }
 
@@ -55,31 +52,30 @@ main {
 }
 
 #navigation #burger-box {
-  cursor: pointer; /* curseur pour les liens (souvent une main) */
-  display: block; /* pour afficher le burger car on est sur mobile */
   float: right; /* Pour faire afficher le burger au bout de la ligne du logo et non pas tout de suite après */
   padding: 25px 25px;
+  cursor: pointer; /* curseur pour les liens (souvent une main) */
 }
 
 /* dessine le trait du milieu du burger */
 #navigation #burger-box #steak {
-  display: block;
+  background: white;
   width: 20px;
   height: 2px;
+  display: block;
   position: relative;
-  background: white;
   transition: background 2s ease-out;
 }
 
 /* ajoute 2 autres traits au dessus et au dessous du steak */
 #navigation #burger-box #steak::before,
 #navigation #burger-box #steak::after {
-  content: ""; /* obligatoire d'ajouter un contenu vide car sinon rien ne s'affichera */
-  display: block;
-  height: 100%;
-  width: 100%;
-  position: absolute;
   background: white;
+  width: 100%;
+  height: 100%;
+  display: block;
+  content: ""; /* obligatoire d'ajouter un contenu vide car sinon rien ne s'affichera */
+  position: absolute;
   transition: all 2s ease-out;
 }
 
