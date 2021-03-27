@@ -1,0 +1,141 @@
+/************************* GENERAL *************************/
+
+body {
+  font-family: cursive;
+  background: rgba(0, 51, 183, 1);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+  position: relative;
+  margin: 0 auto; /* Attention ! Bug des marges ! Si on met une margin-top, cela fait descendre le nav ! Donc margin-top à 0 et mettre un padding-top à la place */
+  padding: 52px 0;
+}
+
+/************************* NAVIGATION : MENU *************************/
+#navigation {
+  background-color: rgba(113, 147, 235, 1);
+  width: 100%;
+  position: fixed;
+  z-index: 3; /* pour qu'il s'affiche toujours devant */
+}
+
+#navigation #logo {
+  display: inline-block; /* inline-block car display:block mettrait le burger à la ligne sous le logo (au lieu de la même ligne) et sans le block on ne pourrait pas appliquer le padding car pas de padding sur un inline */
+  padding: 6px 20px;
+  font-size: 2rem;
+}
+
+#navigation .menu-text {
+  list-style: none; /* suppression des puces des listes (on est dans un ul) */
+  display: block; /* le float plus bas ne s'appliquera que sur un block. Pas indispensable car c'est un ul, donc par défaut déjà en block */
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* pour masquer le menu lorsqu'on est sur mobile */
+  clear: both; /* pour pouvoir appliquer le float sans décaler le logo */
+  float: left;
+  max-height: 0; /* pour que le menu soit masqué par défaut */
+  transition: max-height 0.2s ease-out; /* effet d'apparition/disparition du menu vertical sur mobile */
+}
+
+#navigation .menu-text li a {
+  display: block; /* pour pouvoir appliquer le padding car pas de padding sur un inline */
+  padding: 15px 30px;
+  font-size: 1.5rem;
+}
+
+#navigation #burger-box {
+  cursor: pointer; /* curseur pour les liens (souvent une main) */
+  display: block; /* pour afficher le burger car on est sur mobile */
+  float: right; /* Pour faire afficher le burger au bout de la ligne du logo et non pas tout de suite après */
+  padding: 25px 25px;
+}
+
+/* dessine le trait du milieu du burger */
+#navigation #burger-box #steak {
+  display: block;
+  width: 20px;
+  height: 2px;
+  position: relative;
+  background: white;
+  transition: background 2s ease-out;
+}
+
+/* ajoute 2 autres traits au dessus et au dessous du steak */
+#navigation #burger-box #steak::before,
+#navigation #burger-box #steak::after {
+  content: ""; /* obligatoire d'ajouter un contenu vide car sinon rien ne s'affichera */
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: white;
+  transition: all 2s ease-out;
+}
+
+#navigation #burger-box #steak::before {
+  /* Distance entre le 1er et le 2ème trait */
+  top: -8px;
+}
+
+#navigation #burger-box #steak::after {
+  /* Distance entre le 2ème et le 3ème trait */
+  top: 8px;
+}
+
+/* checkbox-invisible = case à cocher invisible, car une checkbox a uniquement deux états: coché ou non, et on va se servir de ces deux états pour afficher ou cacher le menu voisin dans l’HTML */
+#navigation #checkbox-invisible {
+  display: none;
+}
+
+/* Avec le ~ on sélectionne les éléments ayant pour classe .menu-text précédés d’un élément ayant pour id #checkbox-invisible.
+Avec la pseudo classe :checked, on ne sélectionne .menu-text uniquement si #checkbox-invisible est cochée. */
+#navigation #checkbox-invisible:checked ~ .menu-text {
+  max-height: 240px;
+}
+
+#navigation #checkbox-invisible:checked ~ #burger-box #steak {
+  background: transparent; /* Au clic, on masque le trait du milieu du burger */
+}
+
+#navigation #checkbox-invisible:checked ~ #burger-box #steak::before {
+  transform: rotate(45deg); /* Au clic, on pivote le trait du haut du burger */
+  top: 0; /* et il faut le redescendre car il a pivoté aoutour de son point médian, pas du point tout à gauche */
+}
+
+#navigation #checkbox-invisible:checked ~ #burger-box #steak::after {
+  transform: rotate(-45deg); /* Au clic, on pivote le trait du bas du burger */
+  top: 0; /* et il faut le remonter car il a pivoté aoutour de son point médian, pas du point tout à gauche */
+}
+
+/************************* MEDIA QUERIES *************************/
+
+@media screen and (min-width: 1100px) {
+  /* NAVIGATION : MENU */
+  #navigation {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  #navigation .menu-text {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: visible; /* pour afficher le menu textuel lorsqu'on est sur desktop */
+  }
+
+  #navigation #burger-box {
+    display: none; /* on masque le burger sur desktop */
+  }
+}
